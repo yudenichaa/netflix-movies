@@ -22,6 +22,7 @@ const MoviesLine: React.FC<IMoviesLine> = ({
     const [selectedMovieID, setSelectedMovieID] = useState<null | number>(null);
     const [trailerID, setTrailerID] = useState("");
     const [mouseDown, setMouseDown] = useState(false);
+    const [wasScroll, setWasScroll] = useState(false);
     const [scrollStartPosition, setScrollStartPosition] = useState(0);
     const [scrollValue, setScrollValue] = useState(0);
     const moviesContainerRef = useRef<null | HTMLDivElement>(null);
@@ -30,6 +31,7 @@ const MoviesLine: React.FC<IMoviesLine> = ({
     const onMouseDown = (event: React.MouseEvent): void => {
         setMouseDown(true);
         setScrollStartPosition(event.clientX);
+        setWasScroll(false);
     };
 
     const onMouseUp = (): void => {
@@ -65,6 +67,7 @@ const MoviesLine: React.FC<IMoviesLine> = ({
             newScrollValue = moviesLineContentWidth;
         setScrollStartPosition(clientX);
         setScrollValue(newScrollValue);
+        setWasScroll(true);
     };
 
     useEffect(() => {
@@ -74,7 +77,8 @@ const MoviesLine: React.FC<IMoviesLine> = ({
             .catch((error) => console.log(error));
     }, [requestURL]);
 
-    const onMovieClick = (index: number) => {
+    const onMovieClick = (index: number): void => {
+        if (wasScroll) return;
         const movie = movies[index];
         if (movie.id == selectedMovieID) {
             setTrailerID("");
