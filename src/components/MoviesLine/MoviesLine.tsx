@@ -19,7 +19,7 @@ const MoviesLine: React.FC<IMoviesLine> = ({
     isLarge = false,
 }) => {
     const [movies, setMovies] = useState([]);
-    const [selectedMovieID, setSelectedMovieID] = useState<null | number>(null);
+    // const [selectedMovieID, setSelectedMovieID] = useState<null | number>(null);
     const [trailerID, setTrailerID] = useState("");
     const [mouseDown, setMouseDown] = useState(false);
     const [wasScroll, setWasScroll] = useState(false);
@@ -79,19 +79,14 @@ const MoviesLine: React.FC<IMoviesLine> = ({
 
     const onMovieClick = (index: number): void => {
         if (wasScroll) return;
+        setTrailerID("");
         const movie = movies[index];
-        if (movie.id == selectedMovieID) {
-            setTrailerID("");
-            setSelectedMovieID(null);
-        } else {
-            movieTrailer(movie.title || movie.original_title || movie.name)
-                .then((url: string) => {
-                    const urlParams = new URLSearchParams(new URL(url).search);
-                    setTrailerID(urlParams.get("v"));
-                    setSelectedMovieID(movie.id);
-                })
-                .catch((error: Error) => console.log(error));
-        }
+        movieTrailer(movie.title || movie.original_title || movie.name)
+            .then((url: string) => {
+                const urlParams = new URLSearchParams(new URL(url).search);
+                setTrailerID(urlParams.get("v"));
+            })
+            .catch((error: Error) => console.log(error));
     };
 
     return (
