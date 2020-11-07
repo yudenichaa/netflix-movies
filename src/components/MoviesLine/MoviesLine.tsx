@@ -19,7 +19,6 @@ const MoviesLine: React.FC<IMoviesLine> = ({
     isLarge = false,
 }) => {
     const [movies, setMovies] = useState([]);
-    // const [selectedMovieID, setSelectedMovieID] = useState<null | number>(null);
     const [trailerID, setTrailerID] = useState("");
     const [mouseDown, setMouseDown] = useState(false);
     const [wasScroll, setWasScroll] = useState(false);
