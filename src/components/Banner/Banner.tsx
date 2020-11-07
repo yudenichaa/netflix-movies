@@ -43,8 +43,6 @@ const Banner: React.FC = () => {
         []
     );
 
-    // if (!movie) return null;
-
     return (
         <div
             className="banner"
