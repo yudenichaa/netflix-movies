@@ -43,51 +43,61 @@ const Banner: React.FC = () => {
         []
     );
 
-    if (!movie) return null;
+    // if (!movie) return null;
 
     return (
         <div
             className="banner"
             style={{
-                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${
-                    movie.backdrop_path
-                        ? getMovieImageURL(movie.backdrop_path, "original")
-                        : noBannerImage
-                })`,
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), ${
+                    movie &&
+                    `url(${
+                        movie.backdrop_path
+                            ? getMovieImageURL(movie.backdrop_path, "original")
+                            : noBannerImage
+                    })`
+                }`,
             }}
         >
-            <div className="banner__content">
-                <h2 className="banner__movie-title">
-                    {movie.title || movie.name}
-                </h2>
-                {trailerID && (
-                    <button
-                        className="banner__play-button"
-                        onClick={onPlayTrailerClick}
-                    >
-                        Play trailer
-                    </button>
-                )}
-                <p className="banner__movie-overview">
-                    {truncate(movie.overview, 200)}
-                </p>
-            </div>
-            {trailerID && trailerOpen && (
-                <div className="banner__trailer" onClick={onCloseTrailerClick}>
-                    <div className="banner__trailer-container">
-                        <span
-                            className="banner__trailer-close-button"
+            {movie && (
+                <>
+                    <div className="banner__content">
+                        <h2 className="banner__movie-title">
+                            {movie.title || movie.name}
+                        </h2>
+                        {trailerID && (
+                            <button
+                                className="banner__play-button"
+                                onClick={onPlayTrailerClick}
+                            >
+                                Play trailer
+                            </button>
+                        )}
+                        <p className="banner__movie-overview">
+                            {truncate(movie.overview, 200)}
+                        </p>
+                    </div>
+                    {trailerID && trailerOpen && (
+                        <div
+                            className="banner__trailer"
                             onClick={onCloseTrailerClick}
                         >
-                            &times;
-                        </span>
-                        <Youtube
-                            className="banner__trailer-player"
-                            videoId={trailerID}
-                            opts={config.bannerYoutubeOptions}
-                        />
-                    </div>
-                </div>
+                            <div className="banner__trailer-container">
+                                <span
+                                    className="banner__trailer-close-button"
+                                    onClick={onCloseTrailerClick}
+                                >
+                                    &times;
+                                </span>
+                                <Youtube
+                                    className="banner__trailer-player"
+                                    videoId={trailerID}
+                                    opts={config.bannerYoutubeOptions}
+                                />
+                            </div>
+                        </div>
+                    )}
+                </>
             )}
         </div>
     );
