@@ -3,8 +3,7 @@
     "version": "1.0.0",
     "scripts": {
         "start": "webpack-dev-server --open",
-        "watch": "webpack --watch",
-        "build": "webpack"
+        "build": "webpack --env.production"
     },
     "devDependencies": {
         "@types/react": "^16.9.55",

@@ -1,6 +1,6 @@
 const path = require("path");
 
-module.exports = {
+module.exports = (env = {}) => ({
     entry: {
         index: "./src/index.tsx",
     },
@@ -8,8 +8,8 @@ module.exports = {
         path: path.join(__dirname, "public/"),
         filename: "bundle.js",
     },
-    mode: "development",
-    devtool: "inline-source-map",
+    mode: env.production ? "production" : "development",
+    devtool: env.production ? "" : "inline-source-map",
     devServer: {
         contentBase: "./public",
     },
@@ -46,4 +46,4 @@ module.exports = {
             },
         ],
     },
-};
+});
